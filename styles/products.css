@@ -125,6 +125,7 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: 1.5rem;
+  justify-items: center;
 }
 
 .product-card {
@@ -135,8 +136,8 @@
   border: 1px solid var(--border-color);
   transition: all 0.3s ease;
   position: relative;
+  width: 100%;
   max-width: 280px;
-  margin: 0 auto;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -195,11 +196,13 @@
   text-decoration: none;
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 6px;
   transition: all 0.3s ease;
   box-shadow: var(--shadow-md);
   font-size: 0.85rem;
   margin-top: auto;
+  text-align: center;
 }
 
 .whatsapp-btn:hover {
@@ -271,6 +274,7 @@
 
   .products-grid {
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.2rem;
   }
 }
 
@@ -289,6 +293,7 @@
 
   .products-grid {
     grid-template-columns: 1fr;
+    gap: 1rem;
   }
 
   .product-card {

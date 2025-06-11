@@ -20,14 +20,29 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   })
 
-  // Mobile menu toggle
+  // Mobile menu toggle - Fixed implementation
+  initializeMobileMenu()
+})
+
+// Fixed mobile menu functionality
+function initializeMobileMenu() {
   const menuToggle = document.getElementById("menuToggle")
   const nav = document.querySelector(".nav")
 
   if (menuToggle && nav) {
-    menuToggle.addEventListener("click", () => {
+    menuToggle.addEventListener("click", (e) => {
+      e.preventDefault()
+      e.stopPropagation()
+
       nav.classList.toggle("active")
       menuToggle.classList.toggle("active")
+
+      // Prevent body scroll when menu is open
+      if (nav.classList.contains("active")) {
+        document.body.style.overflow = "hidden"
+      } else {
+        document.body.style.overflow = "auto"
+      }
     })
 
     // Close menu when clicking outside
@@ -35,10 +50,30 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!menuToggle.contains(e.target) && !nav.contains(e.target)) {
         nav.classList.remove("active")
         menuToggle.classList.remove("active")
+        document.body.style.overflow = "auto"
+      }
+    })
+
+    // Close menu when clicking on nav links
+    const navLinks = nav.querySelectorAll(".nav-link")
+    navLinks.forEach((link) => {
+      link.addEventListener("click", () => {
+        nav.classList.remove("active")
+        menuToggle.classList.remove("active")
+        document.body.style.overflow = "auto"
+      })
+    })
+
+    // Handle window resize
+    window.addEventListener("resize", () => {
+      if (window.innerWidth > 768) {
+        nav.classList.remove("active")
+        menuToggle.classList.remove("active")
+        document.body.style.overflow = "auto"
       }
     })
   }
-})
+}
 
 // Load products data from JSON
 async function loadProductsData() {
@@ -105,6 +140,11 @@ function loadHeader() {
 
     // Load categories dropdown after header is created
     loadCategoriesDropdown()
+
+    // Re-initialize mobile menu after header is loaded
+    setTimeout(() => {
+      initializeMobileMenu()
+    }, 100)
   }
 }
 
@@ -160,6 +200,10 @@ function loadFooter() {
                             <p><i class="fab fa-whatsapp"></i> +91-9871124465</p>
                             <p><i class="fas fa-envelope"></i> glutenfreeindiainfo@gmail.com</p>
                             <p><i class="fas fa-map-marker-alt"></i> M-300, SPS Heights, Ahinsa Khand-2, Indirapuram, Ghaziabad, U.P. 201014</p>
+                        </div>
+                        
+                        <div class="footer-section">
+                            <h3>Timings</h3>
                             <p><i class="fas fa-clock"></i> Orders: Till Thursday 3 P.M. Weekly</p>
                             <p><i class="fas fa-truck"></i> Delivery: Saturday 10 A.M. - 6 P.M.</p>
                         </div>

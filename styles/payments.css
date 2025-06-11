@@ -6,8 +6,9 @@
 }
 
 .payment-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 1.5rem;
 }
 
@@ -23,10 +24,11 @@
   overflow: hidden;
   width: 100%;
   max-width: 320px;
-  margin: 0 auto;
   height: 100%;
   display: flex;
   flex-direction: column;
+  flex-basis: calc(33.333% - 1.5rem);
+  min-width: 280px;
 }
 
 .payment-card::before {
@@ -189,15 +191,24 @@
 }
 
 /* Responsive Design */
-@media (max-width: 1024px) {
+@media (max-width: 1200px) {
   .payment-grid {
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    justify-content: center;
+  }
+
+  .payment-card {
+    flex-basis: calc(50% - 1.5rem);
   }
 }
 
 @media (max-width: 768px) {
   .payment-grid {
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    justify-content: center;
+  }
+
+  .payment-card {
+    flex-basis: 100%;
+    max-width: 400px;
   }
 
   .process-steps {
@@ -217,9 +228,5 @@
 
   .payment-card {
     padding: 1.5rem;
-  }
-
-  .payment-grid {
-    grid-template-columns: 1fr;
   }
 }

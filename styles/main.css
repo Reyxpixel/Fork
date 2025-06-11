@@ -250,35 +250,44 @@ body {
   background: none;
   border: none;
   cursor: pointer;
-  padding: 5px;
+  padding: 8px;
   justify-self: end;
+  border-radius: var(--border-radius-sm);
+  transition: all 0.3s ease;
+}
+
+.menu-toggle:hover {
+  background: var(--primary-gradient-light);
 }
 
 .menu-toggle span {
   width: 22px;
-  height: 2px;
+  height: 3px;
   background: var(--primary-color);
   margin: 2px 0;
-  transition: 0.3s;
+  transition: all 0.3s ease;
   border-radius: 2px;
+  transform-origin: center;
 }
 
 .menu-toggle.active span:nth-child(1) {
-  transform: rotate(-45deg) translate(-4px, 5px);
+  transform: rotate(45deg) translate(6px, 6px);
 }
 
 .menu-toggle.active span:nth-child(2) {
   opacity: 0;
+  transform: scale(0);
 }
 
 .menu-toggle.active span:nth-child(3) {
-  transform: rotate(45deg) translate(-4px, -5px);
+  transform: rotate(-45deg) translate(6px, -6px);
 }
 
 /* Button Styles */
 .btn {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 6px;
   padding: 10px 20px;
   border: none;
@@ -359,10 +368,13 @@ body {
   background: var(--primary-gradient);
   color: white;
   text-align: center;
-  padding: 100px 0 50px;
+  padding: 70px 0 70px; /* Reduced padding */
   margin-top: 70px;
   position: relative;
   overflow: hidden;
+  display: flex;
+  align-items: center;
+  min-height: 220px; /* Reduced min-height */
 }
 
 .page-header::before {
@@ -373,6 +385,11 @@ body {
   right: 0;
   bottom: 0;
   background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="75" cy="75" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="50" cy="10" r="0.5" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+}
+
+.page-header .container {
+  position: relative;
+  z-index: 2;
 }
 
 .page-header h1 {
@@ -565,11 +582,15 @@ body {
 
 .footer-content {
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1.5fr;
-  gap: 2.5rem;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 2rem; /* Equal gap between columns */
   margin-bottom: 2rem;
   align-items: start;
   position: relative;
+  justify-content: center; /* Center the grid */
+  max-width: 1100px; /* Control the max width */
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .footer-section h3 {
@@ -612,6 +633,7 @@ body {
   align-items: center;
   gap: 10px;
   margin-bottom: 1rem;
+  text-decoration: none;
 }
 
 .footer-logo img {
@@ -678,6 +700,144 @@ body {
   box-shadow: var(--shadow-md);
 }
 
+/* Popup Form Styles */
+.popup-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(8px);
+  z-index: 3000;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.popup-modal.active {
+  display: flex;
+  opacity: 1;
+}
+
+.popup-content {
+  background: var(--primary-gradient);
+  color: white;
+  border-radius: var(--border-radius-lg);
+  padding: 2rem;
+  max-width: 500px;
+  width: 90%;
+  box-shadow: var(--shadow-lg);
+  transform: scale(0.9);
+  transition: transform 0.5s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.popup-modal.active .popup-content {
+  transform: scale(1);
+}
+
+.popup-content::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="popupPattern" width="50" height="50" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23popupPattern)"/></svg>');
+}
+
+.popup-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  position: relative;
+}
+
+.popup-header h3 {
+  font-family: "Poppins", sans-serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: white;
+}
+
+.popup-close {
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  font-size: 1.3rem;
+  cursor: pointer;
+  color: white;
+  width: 35px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.popup-close:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: rotate(90deg);
+}
+
+.popup-form {
+  position: relative;
+}
+
+.popup-form .form-group label {
+  color: white;
+  font-weight: 500;
+}
+
+.popup-form .form-group input {
+  background: white;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  color: var(--text-dark);
+}
+
+.popup-form .form-group input::placeholder {
+  color: rgba(0, 0, 0, 0.4);
+}
+
+.popup-form .form-group input:focus {
+  background: white;
+  border-color: white;
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.2);
+}
+
+.popup-form button {
+  background: white;
+  color: var(--primary-color);
+  border: none;
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.popup-form button:hover {
+  background: rgba(255, 255, 255, 0.9);
+  transform: translateY(-2px);
+}
+
+.popup-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  color: white;
+  font-size: 0.85rem;
+}
+
+.popup-checkbox input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: white;
+}
+
 /* Animations */
 @keyframes float {
   0%,
@@ -712,6 +872,11 @@ body {
   .header-content {
     gap: 1rem;
   }
+
+  .footer-content {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+  }
 }
 
 @media (max-width: 768px) {
@@ -727,7 +892,8 @@ body {
 
   .page-header {
     margin-top: 60px;
-    padding: 80px 0 40px;
+    padding: 60px 0 60px;
+    min-height: 180px;
   }
 
   .nav {
@@ -815,7 +981,8 @@ body {
   }
 
   .page-header {
-    padding: 70px 0 30px;
+    padding: 50px 0 50px;
+    min-height: 160px;
   }
 
   .page-header h1 {
