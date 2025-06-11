@@ -1,0 +1,225 @@
+/* Payments Page Styles */
+
+.payment-methods {
+  padding: 3rem 0;
+  background: white;
+}
+
+.payment-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.payment-card {
+  background: white;
+  padding: 2rem;
+  border-radius: var(--border-radius);
+  text-align: center;
+  box-shadow: var(--shadow-md);
+  transition: all 0.3s ease;
+  border: 1px solid var(--border-color);
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  max-width: 320px;
+  margin: 0 auto;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.payment-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--primary-gradient);
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+.payment-card:hover::before {
+  transform: scaleX(1);
+}
+
+.payment-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-lg);
+}
+
+.payment-icon {
+  width: 60px;
+  height: 60px;
+  background: var(--primary-gradient);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.2rem;
+  color: white;
+  font-size: 1.5rem;
+  box-shadow: var(--shadow-md);
+  transition: all 0.3s ease;
+}
+
+.payment-card:hover .payment-icon {
+  animation: pulse 1s ease-in-out;
+}
+
+.payment-card h3 {
+  font-family: "Poppins", sans-serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 0.8rem;
+}
+
+.payment-card p {
+  color: var(--text-light);
+  line-height: 1.6;
+  margin-bottom: 1.2rem;
+  font-size: 0.9rem;
+}
+
+.payment-logos {
+  display: flex;
+  justify-content: center;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-top: auto;
+}
+
+.payment-logo {
+  height: 24px;
+  width: auto;
+  object-fit: contain;
+  transition: all 0.3s ease;
+  filter: grayscale(20%);
+}
+
+.payment-logo:hover {
+  filter: grayscale(0%);
+  transform: scale(1.1);
+}
+
+.payment-features {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin-top: auto;
+}
+
+.feature-tag {
+  background: var(--primary-gradient-light);
+  color: var(--primary-color);
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border: 1px solid rgba(81, 46, 114, 0.2);
+}
+
+.payment-process {
+  padding: 4rem 0;
+  background: var(--secondary-color);
+}
+
+.process-steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 2rem;
+}
+
+.process-step {
+  text-align: center;
+  position: relative;
+  max-width: 280px;
+  margin: 0 auto;
+}
+
+.process-step::after {
+  content: "";
+  position: absolute;
+  top: 20px;
+  right: -1rem;
+  width: 2rem;
+  height: 2px;
+  background: var(--primary-gradient);
+  z-index: 1;
+}
+
+.process-step:last-child::after {
+  display: none;
+}
+
+.step-number {
+  width: 40px;
+  height: 40px;
+  background: var(--primary-gradient);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Poppins", sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin: 0 auto 1.2rem;
+  box-shadow: var(--shadow-md);
+  position: relative;
+  z-index: 2;
+}
+
+.step-content h3 {
+  font-family: "Poppins", sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 0.6rem;
+}
+
+.step-content p {
+  color: var(--text-light);
+  line-height: 1.5;
+  font-size: 0.9rem;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .payment-grid {
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .payment-grid {
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  }
+
+  .process-steps {
+    grid-template-columns: 1fr;
+  }
+
+  .process-step::after {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .payment-methods,
+  .payment-process {
+    padding: 3rem 0;
+  }
+
+  .payment-card {
+    padding: 1.5rem;
+  }
+
+  .payment-grid {
+    grid-template-columns: 1fr;
+  }
+}
