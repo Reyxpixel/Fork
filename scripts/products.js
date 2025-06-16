@@ -2,8 +2,13 @@
 
 let currentCategory = "all"
 let allProducts = []
+let currentHighlightedCard = null
+let baseUrl = ""
 
 document.addEventListener("DOMContentLoaded", () => {
+  // Set base URL properly
+  baseUrl = window.location.origin + window.location.pathname.replace(/\/[^/]*$/, "/products.html")
+
   // Wait for products data to load
   if (window.productsData) {
     initializeProductsPage()
@@ -15,6 +20,15 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }, 100)
   }
+
+  // Initialize jump to products button
+  initializeJumpToProducts()
+
+  // Handle URL routing
+  handleURLRouting()
+
+  // Handle clicks outside highlighted card
+  document.addEventListener("click", handleOutsideClick)
 })
 
 function initializeProductsPage() {
@@ -97,8 +111,8 @@ function selectCategory(categorySlug) {
     }
   }
 
-  // Update URL without page reload
-  const newUrl = categorySlug === "all" ? "products.html" : `products.html?category=${categorySlug}`
+  // Update URL without page reload - proper URL handling
+  const newUrl = categorySlug === "all" ? baseUrl : `${baseUrl}?category=${categorySlug}`
   window.history.pushState({}, "", newUrl)
 
   // Load filtered products
@@ -137,18 +151,24 @@ function loadProducts() {
   productsGrid.innerHTML = filteredProducts
     .map(
       (product) => `
-      <div class="product-card">
+      <div class="product-card" data-product-slug="${product.slug}" onclick="highlightProduct(this, '${product.slug}')">
         <div class="product-image">
           <img src="${product.image}" alt="${product.name}" loading="lazy">
         </div>
         <div class="product-info">
           <h3 class="product-name">${product.name}</h3>
-          <a href="https://api.whatsapp.com/send?phone=919871124465&text=I%20would%20like%20to%20order%20${encodeURIComponent(product.name)}" 
-             target="_blank" 
-             class="whatsapp-btn">
-            <i class="fab fa-whatsapp"></i>
-            Order on WhatsApp
-          </a>
+          <div class="product-actions">
+            <a href="https://api.whatsapp.com/send?phone=919871124465&text=I%20would%20like%20to%20order%20${encodeURIComponent(product.name)}" 
+               target="_blank" 
+               class="whatsapp-btn"
+               onclick="event.stopPropagation()">
+              <i class="fab fa-whatsapp"></i>
+              Order on WhatsApp
+            </a>
+            <button class="share-btn" onclick="shareProduct('${product.slug}', event)" title="Share Product">
+              <i class="fas fa-share-alt"></i>
+            </button>
+          </div>
         </div>
       </div>
     `,
@@ -160,5 +180,263 @@ function handleSearch() {
   loadProducts()
 }
 
-// Make selectCategory globally available
+// Product Highlighting Functions
+function highlightProduct(cardElement, productSlug) {
+  // If already highlighted, unhighlight
+  if (currentHighlightedCard === cardElement) {
+    unhighlightProduct()
+    return
+  }
+
+  // Unhighlight any previously highlighted card
+  unhighlightProduct()
+
+  // Update URL properly - avoid double appending
+  const categoryParam = currentCategory !== "all" ? `?category=${currentCategory}&` : "?"
+  const newUrl = `${baseUrl}${categoryParam}product=${productSlug}`
+  window.history.pushState({ product: productSlug }, "", newUrl)
+
+  // Add blur overlay
+  let overlay = document.querySelector(".products-blur-overlay")
+  if (!overlay) {
+    overlay = document.createElement("div")
+    overlay.className = "products-blur-overlay"
+    document.body.appendChild(overlay)
+  }
+  overlay.classList.add("active")
+
+  // Highlight the card
+  cardElement.classList.add("highlighted")
+  currentHighlightedCard = cardElement
+
+  // Prevent body scroll
+  document.body.style.overflow = "hidden"
+}
+
+function unhighlightProduct() {
+  if (currentHighlightedCard) {
+    currentHighlightedCard.classList.remove("highlighted")
+    currentHighlightedCard = null
+  }
+
+  // Remove blur overlay
+  const overlay = document.querySelector(".products-blur-overlay")
+  if (overlay) {
+    overlay.classList.remove("active")
+  }
+
+  // Restore body scroll
+  document.body.style.overflow = "auto"
+
+  // Update URL back to products page properly
+  const categoryParam = currentCategory !== "all" ? `?category=${currentCategory}` : ""
+  const newUrl = `${baseUrl}${categoryParam}`
+  window.history.pushState({}, "", newUrl)
+}
+
+function handleOutsideClick(event) {
+  if (currentHighlightedCard && !currentHighlightedCard.contains(event.target)) {
+    unhighlightProduct()
+  }
+}
+
+function shareProduct(productSlug, event) {
+  event.stopPropagation()
+
+  const product = allProducts.find((p) => p.slug === productSlug)
+  if (!product) return
+
+  // Create proper shareable URL
+  const categoryParam = currentCategory !== "all" ? `?category=${currentCategory}&` : "?"
+  const productUrl = `${baseUrl}${categoryParam}product=${productSlug}`
+  const shareText = `Check out this gluten-free product: ${product.name} from Gluten Free India`
+
+  // Check if native sharing is available (Android/iOS)
+  if (navigator.share) {
+    navigator
+      .share({
+        title: product.name,
+        text: shareText,
+        url: productUrl,
+      })
+      .catch((error) => {
+        console.log("Error sharing:", error)
+        fallbackShare(productUrl, shareText)
+      })
+  } else {
+    fallbackShare(productUrl, shareText)
+  }
+}
+
+function fallbackShare(url, text) {
+  // Try to copy to clipboard first
+  if (navigator.clipboard) {
+    navigator.clipboard
+      .writeText(url)
+      .then(() => {
+        showNotification("Product link copied to clipboard!", "success")
+      })
+      .catch(() => {
+        // If clipboard fails, show share options
+        showShareOptions(url, text)
+      })
+  } else {
+    showShareOptions(url, text)
+  }
+}
+
+function showShareOptions(url, text) {
+  // Create a simple share menu
+  const shareMenu = document.createElement("div")
+  shareMenu.className = "share-menu"
+  shareMenu.innerHTML = `
+    <div class="share-menu-content">
+      <h4>Share Product</h4>
+      <div class="share-options">
+        <a href="https://api.whatsapp.com/send?text=${encodeURIComponent(text + " " + url)}" target="_blank" class="share-option">
+          <i class="fab fa-whatsapp"></i>
+          WhatsApp
+        </a>
+        <button onclick="copyToClipboard('${url}')" class="share-option">
+          <i class="fas fa-copy"></i>
+          Copy Link
+        </button>
+      </div>
+      <button onclick="closeShareMenu()" class="share-close">Close</button>
+    </div>
+  `
+
+  document.body.appendChild(shareMenu)
+  setTimeout(() => shareMenu.classList.add("active"), 10)
+}
+
+function copyToClipboard(text) {
+  // Fallback for older browsers
+  const textArea = document.createElement("textarea")
+  textArea.value = text
+  document.body.appendChild(textArea)
+  textArea.select()
+  document.execCommand("copy")
+  document.body.removeChild(textArea)
+  showNotification("Link copied to clipboard!", "success")
+  closeShareMenu()
+}
+
+function closeShareMenu() {
+  const shareMenu = document.querySelector(".share-menu")
+  if (shareMenu) {
+    shareMenu.remove()
+  }
+}
+
+// URL Routing - Fixed to handle proper URL structure
+function handleURLRouting() {
+  const urlParams = new URLSearchParams(window.location.search)
+  const productParam = urlParams.get("product")
+  const categoryParam = urlParams.get("category")
+
+  // Handle category first
+  if (categoryParam && categoryParam !== currentCategory) {
+    selectCategory(categoryParam)
+  }
+
+  // Then handle product highlighting
+  if (productParam) {
+    const product = allProducts.find((p) => p.slug === productParam)
+    if (product) {
+      setTimeout(() => {
+        const productCard = document.querySelector(`[data-product-slug="${productParam}"]`)
+        if (productCard) {
+          highlightProduct(productCard, productParam)
+        }
+      }, 100)
+    }
+  }
+}
+
+// Jump to Products Button
+function initializeJumpToProducts() {
+  const jumpBtn = document.getElementById("jumpToProducts")
+  if (jumpBtn) {
+    jumpBtn.addEventListener("click", () => {
+      const productsGrid = document.getElementById("productsGrid")
+      if (productsGrid) {
+        productsGrid.scrollIntoView({ behavior: "smooth" })
+      }
+    })
+  }
+}
+
+// Handle browser back/forward buttons
+window.addEventListener("popstate", () => {
+  unhighlightProduct()
+  handleURLRouting()
+})
+
+// Make functions globally available
 window.selectCategory = selectCategory
+window.highlightProduct = highlightProduct
+window.shareProduct = shareProduct
+
+// Declare showNotification function
+function showNotification(message, type) {
+  // Create notification element
+  const notification = document.createElement("div")
+  notification.className = `notification notification-${type}`
+  notification.innerHTML = `
+    <div class="notification-content">
+      <i class="fas fa-${type === "success" ? "check-circle" : "exclamation-circle"}"></i>
+      <span>${message}</span>
+    </div>
+  `
+
+  // Add notification styles if not already present
+  if (!document.querySelector("#notification-styles")) {
+    const styles = document.createElement("style")
+    styles.id = "notification-styles"
+    styles.textContent = `
+      .notification {
+        position: fixed;
+        top: 100px;
+        right: 20px;
+        background: white;
+        padding: 1rem 1.5rem;
+        border-radius: 12px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+        z-index: 4000;
+        transform: translateX(400px);
+        transition: transform 0.3s ease;
+        border-left: 4px solid var(--primary-color);
+      }
+      .notification.show {
+        transform: translateX(0);
+      }
+      .notification-success {
+        border-left-color: #10b981;
+      }
+      .notification-error {
+        border-left-color: #ef4444;
+      }
+      .notification-content {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+      .notification-success i {
+        color: #10b981;
+      }
+      .notification-error i {
+        color: #ef4444;
+      }
+    `
+    document.head.appendChild(styles)
+  }
+
+  document.body.appendChild(notification)
+
+  setTimeout(() => notification.classList.add("show"), 100)
+  setTimeout(() => {
+    notification.classList.remove("show")
+    setTimeout(() => notification.remove(), 300)
+  }, 3000)
+}

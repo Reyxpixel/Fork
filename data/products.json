@@ -6,23 +6,23 @@
       "image": "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=400&h=300&fit=crop",
       "products": [
         {
-          "id": 1,
           "name": "Gluten Free Flour Mix",
+          "slug": "gluten-free-flour-mix",
           "image": "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=300&h=400&fit=crop"
         },
         {
-          "id": 2,
           "name": "Multigrain Flour Mix",
+          "slug": "multigrain-flour-mix",
           "image": "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=300&h=400&fit=crop"
         },
         {
-          "id": 3,
           "name": "Ragi Flour",
+          "slug": "ragi-flour",
           "image": "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=300&h=400&fit=crop"
         },
         {
-          "id": 4,
           "name": "Jowar Flour",
+          "slug": "jowar-flour",
           "image": "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=300&h=400&fit=crop"
         }
       ]
@@ -33,18 +33,18 @@
       "image": "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=400&h=300&fit=crop",
       "products": [
         {
-          "id": 5,
           "name": "Gluten Free White Bread",
+          "slug": "gluten-free-white-bread",
           "image": "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=300&h=400&fit=crop"
         },
         {
-          "id": 6,
           "name": "Multigrain Bread",
+          "slug": "multigrain-bread",
           "image": "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=300&h=400&fit=crop"
         },
         {
-          "id": 7,
           "name": "Banana Bread",
+          "slug": "banana-bread",
           "image": "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=300&h=400&fit=crop"
         }
       ]
@@ -55,18 +55,18 @@
       "image": "https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=400&h=300&fit=crop",
       "products": [
         {
-          "id": 8,
           "name": "Chocolate Muffins",
+          "slug": "chocolate-muffins",
           "image": "https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=300&h=400&fit=crop"
         },
         {
-          "id": 9,
           "name": "Vanilla Cupcakes",
+          "slug": "vanilla-cupcakes",
           "image": "https://images.unsplash.com/photo-1587668178277-295251f900ce?w=300&h=400&fit=crop"
         },
         {
-          "id": 10,
           "name": "Red Velvet Cake",
+          "slug": "red-velvet-cake",
           "image": "https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=300&h=400&fit=crop"
         }
       ]
@@ -77,18 +77,18 @@
       "image": "https://images.unsplash.com/photo-1499636136210-6f4ee915583e?w=400&h=300&fit=crop",
       "products": [
         {
-          "id": 11,
           "name": "Chocolate Chip Cookies",
+          "slug": "chocolate-chip-cookies",
           "image": "https://images.unsplash.com/photo-1499636136210-6f4ee915583e?w=300&h=400&fit=crop"
         },
         {
-          "id": 12,
           "name": "Oatmeal Cookies",
+          "slug": "oatmeal-cookies",
           "image": "https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=300&h=400&fit=crop"
         },
         {
-          "id": 13,
           "name": "Digestive Biscuits",
+          "slug": "digestive-biscuits",
           "image": "https://images.unsplash.com/photo-1499636136210-6f4ee915583e?w=300&h=400&fit=crop"
         }
       ]
@@ -99,18 +99,18 @@
       "image": "https://images.unsplash.com/photo-1621939514649-280e2ee25f60?w=400&h=300&fit=crop",
       "products": [
         {
-          "id": 14,
           "name": "Multigrain Snack Mix",
+          "slug": "multigrain-snack-mix",
           "image": "https://images.unsplash.com/photo-1621939514649-280e2ee25f60?w=300&h=400&fit=crop"
         },
         {
-          "id": 15,
           "name": "Roasted Chickpeas",
+          "slug": "roasted-chickpeas",
           "image": "https://images.unsplash.com/photo-1606787366850-de6330128bfc?w=300&h=400&fit=crop"
         },
         {
-          "id": 16,
           "name": "Millet Crackers",
+          "slug": "millet-crackers",
           "image": "https://images.unsplash.com/photo-1621939514649-280e2ee25f60?w=300&h=400&fit=crop"
         }
       ]
@@ -121,18 +121,18 @@
       "image": "https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=400&h=300&fit=crop",
       "products": [
         {
-          "id": 17,
           "name": "Granola Mix",
+          "slug": "granola-mix",
           "image": "https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=300&h=400&fit=crop"
         },
         {
-          "id": 18,
           "name": "Muesli",
+          "slug": "muesli",
           "image": "https://images.unsplash.com/photo-1574484284002-952d92456975?w=300&h=400&fit=crop"
         },
         {
-          "id": 19,
           "name": "Pancake Mix",
+          "slug": "pancake-mix",
           "image": "https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=300&h=400&fit=crop"
         }
       ]
@@ -143,18 +143,18 @@
       "image": "https://images.unsplash.com/photo-1551892374-ecf8754cf8b0?w=400&h=300&fit=crop",
       "products": [
         {
-          "id": 20,
           "name": "Rice Pasta Penne",
+          "slug": "rice-pasta-penne",
           "image": "https://images.unsplash.com/photo-1551892374-ecf8754cf8b0?w=300&h=400&fit=crop"
         },
         {
-          "id": 21,
           "name": "Quinoa Noodles",
+          "slug": "quinoa-noodles",
           "image": "https://images.unsplash.com/photo-1555949258-eb67b1ef0ceb?w=300&h=400&fit=crop"
         },
         {
-          "id": 22,
           "name": "Millet Pasta",
+          "slug": "millet-pasta",
           "image": "https://images.unsplash.com/photo-1551892374-ecf8754cf8b0?w=300&h=400&fit=crop"
         }
       ]
@@ -165,18 +165,18 @@
       "image": "https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=400&h=300&fit=crop",
       "products": [
         {
-          "id": 23,
           "name": "Instant Dosa Mix",
+          "slug": "instant-dosa-mix",
           "image": "https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=300&h=400&fit=crop"
         },
         {
-          "id": 24,
           "name": "Idli Mix",
+          "slug": "idli-mix",
           "image": "https://images.unsplash.com/photo-1606491956689-2ea866880c84?w=300&h=400&fit=crop"
         },
         {
-          "id": 25,
           "name": "Upma Mix",
+          "slug": "upma-mix",
           "image": "https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=300&h=400&fit=crop"
         }
       ]
